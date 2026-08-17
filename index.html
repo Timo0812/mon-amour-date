@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulaire officiel — Autorisation de sortie amoureuse</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #241934;
+        --card: #2f2244;
+        --card-line: #4a3866;
+        --coral: #ff8966;
+        --coral-dark: #e06a47;
+        --gold: #e8b75e;
+        --text: #f5efe6;
+        --muted: #b8a9cc;
+        --stamp-red: #c4453b;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Work Sans", sans-serif;
+        min-height: 100vh;
+      }
+      body {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 48px 20px 80px;
+      }
+      .wrap {
+        width: 100%;
+        max-width: 560px;
+      }
+      .letterhead {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding: 0 4px 14px;
+        border-bottom: 1px solid var(--card-line);
+        margin-bottom: 28px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--card-line);
+        border-radius: 14px;
+        padding: 40px 36px;
+        position: relative;
+        overflow: hidden;
+      }
+      h1 {
+        font-family: "Fraunces", serif;
+        font-weight: 500;
+        font-size: 28px;
+        line-height: 1.25;
+        margin: 0 0 8px;
+      }
+      .dossier {
+        font-size: 13px;
+        color: var(--muted);
+        margin: 0 0 28px;
+      }
+      .lead {
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--text);
+        margin: 0 0 32px;
+      }
+      .article-label {
+        font-family: "Fraunces", serif;
+        font-style: italic;
+        font-size: 13px;
+        color: var(--gold);
+        margin: 0 0 6px;
+        letter-spacing: 0.02em;
+      }
+      .question {
+        font-size: 18px;
+        font-weight: 500;
+        margin: 0 0 20px;
+        line-height: 1.4;
+      }
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+      .option {
+        text-align: left;
+        background: transparent;
+        border: 1px solid var(--card-line);
+        color: var(--text);
+        font-family: "Work Sans", sans-serif;
+        font-size: 15px;
+        padding: 14px 16px;
+        border-radius: 9px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s ease,
+          background 0.15s ease;
+      }
+      .option:hover {
+        border-color: var(--coral);
+        background: rgba(255, 137, 102, 0.08);
+      }
+      .option:focus-visible {
+        outline: 2px solid var(--coral);
+        outline-offset: 2px;
+      }
+      .progress {
+        display: flex;
+        gap: 6px;
+        margin-top: 32px;
+      }
+      .dot {
+        height: 4px;
+        flex: 1;
+        background: var(--card-line);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      .dot.done {
+        background: var(--coral);
+      }
+      .screen {
+        display: none;
+      }
+      .screen.active {
+        display: block;
+      }
+      .btn-primary {
+        background: var(--coral);
+        color: #2a1710;
+        border: none;
+        font-family: "Work Sans", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        padding: 14px 28px;
+        border-radius: 9px;
+        cursor: pointer;
+        transition:
+          background 0.15s ease,
+          transform 0.1s ease;
+      }
+      .btn-primary:hover {
+        background: var(--coral-dark);
+      }
+      .btn-primary:active {
+        transform: scale(0.98);
+      }
+      .btn-primary:focus-visible {
+        outline: 2px solid var(--gold);
+        outline-offset: 2px;
+      }
+
+      .verdict-block {
+        background: rgba(0, 0, 0, 0.15);
+        border: 1px solid var(--card-line);
+        border-radius: 10px;
+        padding: 18px 20px;
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--muted);
+        margin-bottom: 28px;
+      }
+      .verdict-block b {
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      .stamp-area {
+        position: relative;
+        min-height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 8px 0 28px;
+      }
+      .stamp {
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        font-size: 26px;
+        color: var(--stamp-red);
+        border: 4px solid var(--stamp-red);
+        border-radius: 10px;
+        padding: 10px 22px;
+        transform: rotate(-8deg) scale(2.4);
+        opacity: 0;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        transition:
+          transform 0.45s cubic-bezier(0.2, 0.8, 0.3, 1.2),
+          opacity 0.3s ease;
+      }
+      .stamp.show {
+        transform: rotate(-8deg) scale(1);
+        opacity: 1;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .stamp {
+          transition: opacity 0.2s ease;
+          transform: rotate(-8deg) scale(1);
+        }
+      }
+
+      .invite-title {
+        font-family: "Fraunces", serif;
+        font-weight: 500;
+        font-size: 24px;
+        text-align: center;
+        margin: 0 0 6px;
+      }
+      .invite-sub {
+        text-align: center;
+        color: var(--muted);
+        font-size: 14px;
+        margin: 0 0 24px;
+      }
+      .details {
+        background: rgba(0, 0, 0, 0.15);
+        border: 1px solid var(--card-line);
+        border-radius: 10px;
+        padding: 20px 22px;
+        margin-bottom: 28px;
+      }
+      .details-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        font-size: 14px;
+        border-bottom: 1px solid var(--card-line);
+      }
+      .details-row:last-child {
+        border-bottom: none;
+      }
+      .details-row span:first-child {
+        color: var(--muted);
+      }
+      .details-row span:last-child {
+        font-weight: 500;
+        text-align: right;
+      }
+
+      .actions {
+        display: flex;
+        justify-content: center;
+      }
+      .final {
+        display: none;
+        text-align: center;
+      }
+      .final.active {
+        display: block;
+      }
+      .final p {
+        font-size: 16px;
+        line-height: 1.6;
+      }
+      .final .invite-title {
+        margin-bottom: 12px;
+      }
+
+      .comment-input {
+        width: 100%;
+        background: transparent;
+        border: 1px solid var(--card-line);
+        color: var(--text);
+        font-family: "Work Sans", sans-serif;
+        font-size: 15px;
+        padding: 14px 16px;
+        border-radius: 9px;
+        resize: vertical;
+        min-height: 100px;
+      }
+      .comment-input::placeholder {
+        color: var(--muted);
+      }
+      .comment-input:focus-visible {
+        outline: 2px solid var(--coral);
+        outline-offset: 2px;
+      }
+
+      .ask-wrap {
+        text-align: center;
+      }
+      .ask-question {
+        font-family: "Fraunces", serif;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 1.35;
+        margin: 8px 0 4px;
+      }
+      .ask-buttons {
+        position: relative;
+        min-height: 220px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        margin-top: 24px;
+      }
+      .ask-buttons.formulaire {
+        min-height: 0;
+        margin-top: 12px;
+      }
+      .btn-non {
+        background: transparent;
+        border: 1px solid var(--card-line);
+        color: var(--text);
+        font-family: "Work Sans", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        padding: 14px 28px;
+        border-radius: 9px;
+        cursor: pointer;
+        white-space: nowrap;
+        transition:
+          left 0.18s ease,
+          top 0.18s ease;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="letterhead">
+        <span>Confédération de l'amour</span>
+        <span>Dossier n°2016-2026 // Minoush</span>
+      </div>
+
+      <div class="card">
+        <div class="screen active" id="screen-ask">
+          <div class="ask-wrap">
+            <div class="ask-question">
+              Tu veux bien venir en date avec moi 🫣?
+            </div>
+            <div class="ask-buttons" id="ask-buttons">
+              <button class="btn-primary" id="btn-oui" type="button">
+                Oui
+              </button>
+              <button class="btn-non" id="btn-non" type="button">Non</button>
+            </div>
+          </div>
+        </div>
+        <div class="screen" id="screen-answer">
+          <div class="ask-wrap">
+            <div class="ask-question">
+              Mooooh c'est vrai tu veux? trop bien 🥰
+            </div>
+            <p>Clique ici pour valider ma demande ⤵️</p>
+            <div class="ask-buttons formulaire" id="answer-buttons">
+              <button class="btn-primary" id="btn-formulaire" type="button">
+                Formulaire simplifié
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen" id="screen-intro">
+          <h1>Formulaire officiel de demande</h1>
+          <p class="dossier">
+            Objet : autorisation de sortie en amoureux // procédure simplifiée
+          </p>
+          <p class="lead">
+            Chère amoureuse,<br /><br />
+            Ce dossier vise à établir aussi rapidement que possible mais aussi
+            lentement que la situation l'exige, les bases de notre sortie à
+            deux.<br /><br />
+            Cinq articles sont à traiter.<br /><br />
+            Aucun justificatif n'est requis, seule ta sincérité est prise en
+            compte.
+          </p>
+          <button class="btn-primary" id="start-btn">Ouvrir le dossier</button>
+        </div>
+
+        <div class="screen" id="screen-quiz">
+          <div class="article-label" id="q-label">Article 1</div>
+          <div class="question" id="q-text"></div>
+          <div class="options" id="q-options"></div>
+          <div class="progress" id="progress"></div>
+        </div>
+
+        <div class="screen" id="screen-comment">
+          <div class="article-label">Bonus</div>
+          <div class="question">
+            Une remarque, une envie, un mot à ajouter au dossier ?
+          </div>
+          <textarea
+            class="comment-input"
+            id="comment-input"
+            rows="4"
+            placeholder="Écris ici si tu veux ajouter quelque chose… ou laisse vide."
+          ></textarea>
+          <div class="actions" style="margin-top: 20px">
+            <button class="btn-primary" id="comment-submit-btn" type="button">
+              Valider le dossier
+            </button>
+          </div>
+        </div>
+
+        <div class="screen" id="screen-result">
+          <h1 style="font-size: 22px">Traitement du dossier en cours</h1>
+          <div class="verdict-block" id="verdict-text"></div>
+          <div class="stamp-area">
+            <div class="stamp" id="stamp">Approuvé</div>
+          </div>
+          <div class="final" id="final-block">
+            <div class="invite-title">
+              Date validé le
+              <span id="final-date">date</span>
+            </div>
+            <div class="invite-sub">
+              Décision rendue en dernier ressort, non susceptible de recours
+            </div>
+            <div class="details">
+              <div class="details-row">
+                <span>Requérant</span><span>Ton mari</span>
+              </div>
+              <div class="details-row">
+                <span>Convocation</span
+                ><span id="final-date-convocation">date</span>
+              </div>
+              <div class="details-row">
+                <span>Tenue exigée</span><span>Ce que tu veux</span>
+              </div>
+              <div class="details-row">
+                <span>Motif du date</span><span>Parce que tu le vaux bien</span>
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn-primary" id="accept-btn">
+                Je valide la demande
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen" id="screen-thanks">
+          <div class="invite-title">Dossier classé avec le sourire</div>
+          <p class="lead" style="text-align: center">
+            Demande enregistrée avec la mention "évidemment".<br />
+            <br />
+            Vivement le <span id="thanks-date">Date</span><br /><br />
+            Je t'aime 😘
+          </p>
+          <div class="actions" style="margin-top: 24px">
+            <button class="btn-primary" id="send-btn" type="button">
+              Envoyer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const questions = [
+        {
+          label: "Article 1",
+          text: "Quand ?",
+          options: ["Date 1", "Date 2", "Date 3"],
+        },
+        {
+          label: "Article 2",
+          text: "Situation Géographique Souhaitée",
+          options: [
+            "Maison",
+            "Pas à la maison, mais pas loin (1h t'as vu)",
+            "Fais moi rêver",
+          ],
+        },
+        {
+          label: "Article 3",
+          text: "Ambiance souhaitée",
+          options: ["Chill", "Classe", "... 😏"],
+        },
+        {
+          label: "Article 4",
+          text: "Régime alimentaire de la mission",
+          options: ["Fait maison", "Restaurant", "On se fait livrer"],
+        },
+        {
+          label: "Article 5",
+          text: "Degré d'aventure souhaité",
+          options: [
+            "Terrain connu",
+            "Terre inconnue",
+            "Peu importe, tant qu'on est les deux",
+          ],
+        },
+      ];
+
+      const answers = [];
+      let comment = "";
+      let current = 0;
+
+      const screenAsk = document.getElementById("screen-ask");
+      const screenAnswer = document.getElementById("screen-answer");
+      const screenIntro = document.getElementById("screen-intro");
+      const screenQuiz = document.getElementById("screen-quiz");
+      const screenComment = document.getElementById("screen-comment");
+      const screenResult = document.getElementById("screen-result");
+      const screenThanks = document.getElementById("screen-thanks");
+
+      function showScreen(el) {
+        [
+          screenAsk,
+          screenAnswer,
+          screenIntro,
+          screenQuiz,
+          screenComment,
+          screenResult,
+          screenThanks,
+        ].forEach((s) => s.classList.remove("active"));
+        el.classList.add("active");
+      }
+
+      document.getElementById("start-btn").addEventListener("click", () => {
+        showScreen(screenQuiz);
+        renderQuestion();
+      });
+
+      document.getElementById("btn-oui").addEventListener("click", () => {
+        showScreen(screenAnswer);
+      });
+
+      document
+        .getElementById("btn-formulaire")
+        .addEventListener("click", () => {
+          showScreen(screenIntro);
+        });
+
+      const nonBtn = document.getElementById("btn-non");
+      const askButtons = document.getElementById("ask-buttons");
+
+      function placeNonInitial() {
+        const cRect = askButtons.getBoundingClientRect();
+        const bRect = nonBtn.getBoundingClientRect();
+        nonBtn.style.position = "absolute";
+        nonBtn.style.left = bRect.left - cRect.left + "px";
+        nonBtn.style.top = bRect.top - cRect.top + "px";
+      }
+
+      let isDodging = false;
+
+      function dodgeNon(cursorX, cursorY) {
+        if (isDodging) return;
+        isDodging = true;
+        setTimeout(() => {
+          isDodging = false;
+        }, 220);
+
+        const cRect = askButtons.getBoundingClientRect();
+        const bRect = nonBtn.getBoundingClientRect();
+        const maxX = Math.max(cRect.width - bRect.width, 0);
+        const maxY = Math.max(cRect.height - bRect.height, 0);
+
+        let bestX = Math.random() * maxX;
+        let bestY = Math.random() * maxY;
+
+        if (cursorX != null && cursorY != null) {
+          let bestDist = -1;
+          for (let i = 0; i < 10; i++) {
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+            const cx = cRect.left + x + bRect.width / 2;
+            const cy = cRect.top + y + bRect.height / 2;
+            const dist = Math.hypot(cursorX - cx, cursorY - cy);
+            if (dist > bestDist) {
+              bestDist = dist;
+              bestX = x;
+              bestY = y;
+            }
+          }
+        }
+
+        nonBtn.style.left = bestX + "px";
+        nonBtn.style.top = bestY + "px";
+      }
+
+      function clampNonPosition() {
+        const cRect = askButtons.getBoundingClientRect();
+        const bRect = nonBtn.getBoundingClientRect();
+        const maxX = Math.max(cRect.width - bRect.width, 0);
+        const maxY = Math.max(cRect.height - bRect.height, 0);
+        const x = Math.min(
+          Math.max(parseFloat(nonBtn.style.left) || 0, 0),
+          maxX,
+        );
+        const y = Math.min(
+          Math.max(parseFloat(nonBtn.style.top) || 0, 0),
+          maxY,
+        );
+        nonBtn.style.left = x + "px";
+        nonBtn.style.top = y + "px";
+      }
+
+      window.addEventListener("load", placeNonInitial);
+      setTimeout(placeNonInitial, 300);
+      window.addEventListener("resize", clampNonPosition);
+
+      // Souris / trackpad : le bouton s'éloigne dès que le curseur approche.
+      askButtons.addEventListener("pointermove", (e) => {
+        if (e.pointerType === "touch") return;
+        const bRect = nonBtn.getBoundingClientRect();
+        const cx = bRect.left + bRect.width / 2;
+        const cy = bRect.top + bRect.height / 2;
+        const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
+        if (dist < 90) dodgeNon(e.clientX, e.clientY);
+      });
+
+      // Tactile : on esquive avant que le tap ne se transforme en click.
+      nonBtn.addEventListener(
+        "touchstart",
+        (e) => {
+          e.preventDefault();
+          dodgeNon();
+        },
+        { passive: false },
+      );
+
+      // Clavier (tab + entrée/espace) : même traitement.
+      nonBtn.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          dodgeNon();
+        }
+      });
+
+      // Filet de sécurité : si un clic arrive malgré tout, il ne fait rien d'autre qu'esquiver.
+      nonBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        dodgeNon();
+      });
+
+      function renderProgress() {
+        const bar = document.getElementById("progress");
+        bar.innerHTML = "";
+        questions.forEach((q, i) => {
+          const d = document.createElement("div");
+          d.className = "dot" + (i < current ? " done" : "");
+          bar.appendChild(d);
+        });
+      }
+
+      function renderQuestion() {
+        const q = questions[current];
+        document.getElementById("q-label").textContent = q.label;
+        document.getElementById("q-text").textContent = q.text;
+        const optsEl = document.getElementById("q-options");
+        optsEl.innerHTML = "";
+        q.options.forEach((opt) => {
+          const btn = document.createElement("button");
+          btn.className = "option";
+          btn.type = "button";
+          btn.textContent = opt;
+          btn.addEventListener("click", () => {
+            answers.push(opt);
+            current++;
+            if (current < questions.length) {
+              renderQuestion();
+            } else {
+              showScreen(screenComment);
+            }
+          });
+          optsEl.appendChild(btn);
+        });
+        renderProgress();
+      }
+
+      document
+        .getElementById("comment-submit-btn")
+        .addEventListener("click", () => {
+          comment = document.getElementById("comment-input").value.trim();
+          showResult();
+        });
+
+      function showResult() {
+        showScreen(screenResult);
+        const chosenDate = answers[0];
+        document.getElementById("final-date").textContent = chosenDate;
+        document.getElementById("final-date-convocation").textContent =
+          chosenDate;
+        document.getElementById("thanks-date").textContent = chosenDate;
+        const verdict = document.getElementById("verdict-text");
+        verdict.innerHTML =
+          "Analyse du dossier : la requérante souhaite un date le <b>" +
+          answers[0].toLowerCase() +
+          "</b>, " +
+          "situé à <b>" +
+          answers[1].toLowerCase() +
+          "</b>, dans une ambiance <b>" +
+          answers[2].toLowerCase() +
+          "</b>. " +
+          "Pour manger ce sera : <b>" +
+          answers[3].toLowerCase() +
+          "</b>. Zone d'intervention : <b>" +
+          answers[4].toLowerCase() +
+          "</b>.<br><br>" +
+          "Conclusion de la commission : requête jugée légitime, raisonnable et objectivement adorable.";
+
+        if (comment) {
+          const escapedComment = comment
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+          verdict.innerHTML +=
+            "<br><br>Pièce jointe au dossier : « " + escapedComment + " »";
+        }
+
+        setTimeout(() => {
+          document.getElementById("stamp").classList.add("show");
+        }, 500);
+
+        setTimeout(() => {
+          document.getElementById("final-block").style.display = "block";
+        }, 900);
+      }
+
+      function buildSummaryEmail() {
+        const lines = questions.map((q, i) => q.text + " : " + answers[i]);
+        if (comment) {
+          lines.push("");
+          lines.push("Commentaire : " + comment);
+        }
+        const subject = "Demande de date validée — " + answers[0];
+        const body = lines.join("\n");
+        return (
+          "mailto:lovatotimothy8@gmail.com?subject=" +
+          encodeURIComponent(subject) +
+          "&body=" +
+          encodeURIComponent(body)
+        );
+      }
+
+      document.getElementById("accept-btn").addEventListener("click", () => {
+        showScreen(screenThanks);
+      });
+
+      document.getElementById("send-btn").addEventListener("click", () => {
+        window.location.href = buildSummaryEmail();
+      });
+    </script>
+  </body>
+</html>
