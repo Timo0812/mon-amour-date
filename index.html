@@ -467,15 +467,22 @@
             Vivement le <span id="thanks-date">Date</span><br /><br />
             Je t'aime 😘
           </p>
-          <div class="actions" style="margin-top: 24px; flex-direction: column; gap: 10px">
+          <div class="actions" style="margin-top: 24px">
             <button class="btn-primary" id="send-btn" type="button">
               Envoyer
             </button>
-            <a
-              class="resend-fallback"
-              id="resend-fallback"
-              style="display: none"
-              >Pas reçu ? Renvoyer par mail</a
+          </div>
+        </div>
+
+        <div class="screen" id="screen-sent">
+          <div class="invite-title">C'est envoyé 💌</div>
+          <p class="lead" style="text-align: center">
+            Ta réponse vient de partir tout droit dans ma boîte mail. Plus
+            qu'à attendre le grand jour.
+          </p>
+          <div class="actions" style="margin-top: 16px">
+            <a class="resend-fallback" id="resend-fallback"
+              >Pas reçu de confirmation ? Renvoyer par mail</a
             >
           </div>
         </div>
@@ -485,14 +492,13 @@
         id="email-form"
         action="https://formsubmit.co/lovatotimothy8@gmail.com"
         method="POST"
-        target="email-frame"
         style="display: none"
       >
         <input type="hidden" name="_subject" id="email-subject" />
         <input type="hidden" name="message" id="email-message" />
         <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_next" id="email-next" />
       </form>
-      <iframe name="email-frame" style="display: none"></iframe>
     </div>
 
     <script>
@@ -543,6 +549,7 @@
       const screenComment = document.getElementById("screen-comment");
       const screenResult = document.getElementById("screen-result");
       const screenThanks = document.getElementById("screen-thanks");
+      const screenSent = document.getElementById("screen-sent");
 
       function showScreen(el) {
         [
@@ -553,8 +560,14 @@
           screenComment,
           screenResult,
           screenThanks,
+          screenSent,
         ].forEach((s) => s.classList.remove("active"));
         el.classList.add("active");
+      }
+
+      if (new URLSearchParams(location.search).get("sent") === "1") {
+        showScreen(screenSent);
+        history.replaceState(null, "", location.pathname);
       }
 
       document.getElementById("start-btn").addEventListener("click", () => {
@@ -785,7 +798,15 @@
       const emailForm = document.getElementById("email-form");
       const emailSubjectField = document.getElementById("email-subject");
       const emailMessageField = document.getElementById("email-message");
+      const emailNextField = document.getElementById("email-next");
       const resendFallback = document.getElementById("resend-fallback");
+
+      if (resendFallback) {
+        resendFallback.href = buildMailtoFallback(
+          "Demande de date validée — " + (answers[0] || ""),
+          buildSummaryLines().join("\n"),
+        );
+      }
 
       sendBtn.addEventListener("click", () => {
         const subject = "Demande de date validée — " + answers[0];
@@ -793,13 +814,9 @@
 
         emailSubjectField.value = subject;
         emailMessageField.value = body;
+        emailNextField.value =
+          location.origin + location.pathname + "?sent=1";
         emailForm.submit();
-
-        sendBtn.disabled = true;
-        sendBtn.textContent = "Envoyé ✓";
-
-        resendFallback.href = buildMailtoFallback(subject, body);
-        resendFallback.style.display = "inline-block";
       });
     </script>
   </body>
