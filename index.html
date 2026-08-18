@@ -342,36 +342,22 @@
           left 0.18s ease,
           top 0.18s ease;
       }
-
     </style>
   </head>
   <body>
     <div class="wrap">
       <div class="letterhead">
-        <span>Confédération de l'amour</span>
+        <span>Ministère du Love</span>
         <span>Dossier n°2016-2026 // Minoush</span>
       </div>
 
       <div class="card">
-        <div class="screen active" id="screen-ask">
+        <div class="screen active" id="screen-answer">
           <div class="ask-wrap">
             <div class="ask-question">
-              Tu veux bien venir en date avec moi 🫣?
+              Demande Officielle pour passer du temps de qualité
             </div>
-            <div class="ask-buttons" id="ask-buttons">
-              <button class="btn-primary" id="btn-oui" type="button">
-                Oui
-              </button>
-              <button class="btn-non" id="btn-non" type="button">Non</button>
-            </div>
-          </div>
-        </div>
-        <div class="screen" id="screen-answer">
-          <div class="ask-wrap">
-            <div class="ask-question">
-              Mooooh c'est vrai tu veux? trop bien 🥰
-            </div>
-            <p>Clique ici pour valider ma demande ⤵️</p>
+            <p>Clique ici pour remplir la demande ⤵️</p>
             <div class="ask-buttons formulaire" id="answer-buttons">
               <button class="btn-primary" id="btn-formulaire" type="button">
                 Formulaire simplifié
@@ -383,13 +369,14 @@
         <div class="screen" id="screen-intro">
           <h1>Formulaire officiel de demande</h1>
           <p class="dossier">
-            Objet : autorisation de sortie en amoureux // procédure simplifiée
+            Objet : Quality Time Together // QTT // procédure simplifiée
           </p>
           <p class="lead">
-            Chère amoureuse,<br /><br />
+            Madame Minoush (aussi connue sous "Mamou" ou "la meuf qui pèse un
+            max"),<br /><br />
             Ce dossier vise à établir aussi rapidement que possible mais aussi
-            lentement que la situation l'exige, les bases de notre sortie à
-            deux.<br /><br />
+            lentement que la situation l'exige, les bases d'une soirée de
+            qualité.<br /><br />
             Cinq articles sont à traiter.<br /><br />
             Aucun justificatif n'est requis, seule ta sincérité est prise en
             compte.
@@ -430,7 +417,7 @@
           </div>
           <div class="final" id="final-block">
             <div class="invite-title">
-              Date validé le
+              Date validée
               <span id="final-date">date</span>
             </div>
             <div class="invite-sub">
@@ -448,7 +435,7 @@
                 <span>Tenue exigée</span><span>Ce que tu veux</span>
               </div>
               <div class="details-row">
-                <span>Motif du date</span><span>Parce que tu le vaux bien</span>
+                <span>Motif</span><span>Parce que tu le vaux bien</span>
               </div>
             </div>
             <div class="actions">
@@ -464,8 +451,8 @@
           <p class="lead" style="text-align: center">
             Demande enregistrée avec la mention "évidemment".<br />
             <br />
-            Vivement le <span id="thanks-date">Date</span><br /><br />
-            Je t'aime 😘
+            Vivement <span id="thanks-date">Date</span><br /><br />
+            Tu es la meilleure 😘
           </p>
           <div class="actions" style="margin-top: 24px">
             <button class="btn-primary" id="send-btn" type="button">
@@ -477,14 +464,9 @@
         <div class="screen" id="screen-sent">
           <div class="invite-title">C'est envoyé 💌</div>
           <p class="lead" style="text-align: center">
-            Ta réponse vient de partir tout droit dans ma boîte mail. Plus
-            qu'à attendre le grand jour.
+            Ta réponse vient de partir tout droit dans ma boîte mail. Plus qu'à
+            attendre le grand jour.
           </p>
-          <div class="actions" style="margin-top: 16px">
-            <a class="resend-fallback" id="resend-fallback"
-              >Pas reçu de confirmation ? Renvoyer par mail</a
-            >
-          </div>
         </div>
       </div>
 
@@ -506,14 +488,14 @@
         {
           label: "Article 1",
           text: "Quand ?",
-          options: ["Date 1", "Date 2", "Date 3"],
+          options: ["Ce soir", "Vendredi", "Samedi"],
         },
         {
           label: "Article 2",
           text: "Situation Géographique Souhaitée",
           options: [
             "Maison",
-            "Pas à la maison, mais pas loin (1h t'as vu)",
+            "Pas à la maison, mais pas loin (genre 30 min t'as vu)",
             "Fais moi rêver",
           ],
         },
@@ -533,7 +515,7 @@
           options: [
             "Terrain connu",
             "Terre inconnue",
-            "Peu importe, tant qu'on est les deux",
+            "Peu importe, tant qu'on est ensemble",
           ],
         },
       ];
@@ -542,7 +524,6 @@
       let comment = "";
       let current = 0;
 
-      const screenAsk = document.getElementById("screen-ask");
       const screenAnswer = document.getElementById("screen-answer");
       const screenIntro = document.getElementById("screen-intro");
       const screenQuiz = document.getElementById("screen-quiz");
@@ -553,7 +534,6 @@
 
       function showScreen(el) {
         [
-          screenAsk,
           screenAnswer,
           screenIntro,
           screenQuiz,
@@ -575,118 +555,11 @@
         renderQuestion();
       });
 
-      document.getElementById("btn-oui").addEventListener("click", () => {
-        showScreen(screenAnswer);
-      });
-
       document
         .getElementById("btn-formulaire")
         .addEventListener("click", () => {
           showScreen(screenIntro);
         });
-
-      const nonBtn = document.getElementById("btn-non");
-      const askButtons = document.getElementById("ask-buttons");
-
-      function placeNonInitial() {
-        const cRect = askButtons.getBoundingClientRect();
-        const bRect = nonBtn.getBoundingClientRect();
-        nonBtn.style.position = "absolute";
-        nonBtn.style.left = bRect.left - cRect.left + "px";
-        nonBtn.style.top = bRect.top - cRect.top + "px";
-      }
-
-      let isDodging = false;
-
-      function dodgeNon(cursorX, cursorY) {
-        if (isDodging) return;
-        isDodging = true;
-        setTimeout(() => {
-          isDodging = false;
-        }, 220);
-
-        const cRect = askButtons.getBoundingClientRect();
-        const bRect = nonBtn.getBoundingClientRect();
-        const maxX = Math.max(cRect.width - bRect.width, 0);
-        const maxY = Math.max(cRect.height - bRect.height, 0);
-
-        let bestX = Math.random() * maxX;
-        let bestY = Math.random() * maxY;
-
-        if (cursorX != null && cursorY != null) {
-          let bestDist = -1;
-          for (let i = 0; i < 10; i++) {
-            const x = Math.random() * maxX;
-            const y = Math.random() * maxY;
-            const cx = cRect.left + x + bRect.width / 2;
-            const cy = cRect.top + y + bRect.height / 2;
-            const dist = Math.hypot(cursorX - cx, cursorY - cy);
-            if (dist > bestDist) {
-              bestDist = dist;
-              bestX = x;
-              bestY = y;
-            }
-          }
-        }
-
-        nonBtn.style.left = bestX + "px";
-        nonBtn.style.top = bestY + "px";
-      }
-
-      function clampNonPosition() {
-        const cRect = askButtons.getBoundingClientRect();
-        const bRect = nonBtn.getBoundingClientRect();
-        const maxX = Math.max(cRect.width - bRect.width, 0);
-        const maxY = Math.max(cRect.height - bRect.height, 0);
-        const x = Math.min(
-          Math.max(parseFloat(nonBtn.style.left) || 0, 0),
-          maxX,
-        );
-        const y = Math.min(
-          Math.max(parseFloat(nonBtn.style.top) || 0, 0),
-          maxY,
-        );
-        nonBtn.style.left = x + "px";
-        nonBtn.style.top = y + "px";
-      }
-
-      window.addEventListener("load", placeNonInitial);
-      setTimeout(placeNonInitial, 300);
-      window.addEventListener("resize", clampNonPosition);
-
-      // Souris / trackpad : le bouton s'éloigne dès que le curseur approche.
-      askButtons.addEventListener("pointermove", (e) => {
-        if (e.pointerType === "touch") return;
-        const bRect = nonBtn.getBoundingClientRect();
-        const cx = bRect.left + bRect.width / 2;
-        const cy = bRect.top + bRect.height / 2;
-        const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
-        if (dist < 90) dodgeNon(e.clientX, e.clientY);
-      });
-
-      // Tactile : on esquive avant que le tap ne se transforme en click.
-      nonBtn.addEventListener(
-        "touchstart",
-        (e) => {
-          e.preventDefault();
-          dodgeNon();
-        },
-        { passive: false },
-      );
-
-      // Clavier (tab + entrée/espace) : même traitement.
-      nonBtn.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          dodgeNon();
-        }
-      });
-
-      // Filet de sécurité : si un clic arrive malgré tout, il ne fait rien d'autre qu'esquiver.
-      nonBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        dodgeNon();
-      });
 
       function renderProgress() {
         const bar = document.getElementById("progress");
@@ -814,8 +687,7 @@
 
         emailSubjectField.value = subject;
         emailMessageField.value = body;
-        emailNextField.value =
-          location.origin + location.pathname + "?sent=1";
+        emailNextField.value = location.origin + location.pathname + "?sent=1";
         emailForm.submit();
       });
     </script>
