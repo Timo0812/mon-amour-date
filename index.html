@@ -277,6 +277,13 @@
         margin-bottom: 12px;
       }
 
+      .resend-fallback {
+        color: var(--muted);
+        font-size: 13px;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
       .comment-input {
         width: 100%;
         background: transparent;
@@ -460,13 +467,32 @@
             Vivement le <span id="thanks-date">Date</span><br /><br />
             Je t'aime 😘
           </p>
-          <div class="actions" style="margin-top: 24px">
+          <div class="actions" style="margin-top: 24px; flex-direction: column; gap: 10px">
             <button class="btn-primary" id="send-btn" type="button">
               Envoyer
             </button>
+            <a
+              class="resend-fallback"
+              id="resend-fallback"
+              style="display: none"
+              >Pas reçu ? Renvoyer par mail</a
+            >
           </div>
         </div>
       </div>
+
+      <form
+        id="email-form"
+        action="https://formsubmit.co/lovatotimothy8@gmail.com"
+        method="POST"
+        target="email-frame"
+        style="display: none"
+      >
+        <input type="hidden" name="_subject" id="email-subject" />
+        <input type="hidden" name="message" id="email-message" />
+        <input type="hidden" name="_captcha" value="false" />
+      </form>
+      <iframe name="email-frame" style="display: none"></iframe>
     </div>
 
     <script>
@@ -756,36 +782,24 @@
       });
 
       const sendBtn = document.getElementById("send-btn");
+      const emailForm = document.getElementById("email-form");
+      const emailSubjectField = document.getElementById("email-subject");
+      const emailMessageField = document.getElementById("email-message");
+      const resendFallback = document.getElementById("resend-fallback");
 
-      sendBtn.addEventListener("click", async () => {
+      sendBtn.addEventListener("click", () => {
         const subject = "Demande de date validée — " + answers[0];
         const body = buildSummaryLines().join("\n");
 
-        sendBtn.disabled = true;
-        sendBtn.textContent = "Envoi en cours…";
+        emailSubjectField.value = subject;
+        emailMessageField.value = body;
+        emailForm.submit();
 
-        try {
-          const res = await fetch(
-            "https://formsubmit.co/ajax/lovatotimothy8@gmail.com",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-              },
-              body: JSON.stringify({
-                _subject: subject,
-                message: body,
-              }),
-            },
-          );
-          if (!res.ok) throw new Error("send failed");
-          sendBtn.textContent = "Envoyé ✓";
-        } catch (err) {
-          sendBtn.disabled = false;
-          sendBtn.textContent = "Envoyer";
-          window.location.href = buildMailtoFallback(subject, body);
-        }
+        sendBtn.disabled = true;
+        sendBtn.textContent = "Envoyé ✓";
+
+        resendFallback.href = buildMailtoFallback(subject, body);
+        resendFallback.style.display = "inline-block";
       });
     </script>
   </body>
