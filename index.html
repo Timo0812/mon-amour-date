@@ -733,14 +733,16 @@
         }, 900);
       }
 
-      function buildSummaryEmail() {
+      function buildSummaryLines() {
         const lines = questions.map((q, i) => q.text + " : " + answers[i]);
         if (comment) {
           lines.push("");
           lines.push("Commentaire : " + comment);
         }
-        const subject = "Demande de date validée — " + answers[0];
-        const body = lines.join("\n");
+        return lines;
+      }
+
+      function buildMailtoFallback(subject, body) {
         return (
           "mailto:lovatotimothy8@gmail.com?subject=" +
           encodeURIComponent(subject) +
@@ -753,8 +755,37 @@
         showScreen(screenThanks);
       });
 
-      document.getElementById("send-btn").addEventListener("click", () => {
-        window.location.href = buildSummaryEmail();
+      const sendBtn = document.getElementById("send-btn");
+
+      sendBtn.addEventListener("click", async () => {
+        const subject = "Demande de date validée — " + answers[0];
+        const body = buildSummaryLines().join("\n");
+
+        sendBtn.disabled = true;
+        sendBtn.textContent = "Envoi en cours…";
+
+        try {
+          const res = await fetch(
+            "https://formsubmit.co/ajax/lovatotimothy8@gmail.com",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify({
+                _subject: subject,
+                message: body,
+              }),
+            },
+          );
+          if (!res.ok) throw new Error("send failed");
+          sendBtn.textContent = "Envoyé ✓";
+        } catch (err) {
+          sendBtn.disabled = false;
+          sendBtn.textContent = "Envoyer";
+          window.location.href = buildMailtoFallback(subject, body);
+        }
       });
     </script>
   </body>
