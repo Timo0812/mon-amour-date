@@ -132,6 +132,9 @@
         outline: 2px solid var(--coral);
         outline-offset: 2px;
       }
+      .options.no-hover .option:focus-visible {
+        outline: none;
+      }
       .progress {
         display: flex;
         gap: 6px;
@@ -591,6 +594,7 @@
           btn.type = "button";
           btn.textContent = opt;
           btn.addEventListener("click", () => {
+            btn.blur();
             answers.push(opt);
             current++;
             if (current < questions.length) {
