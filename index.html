@@ -132,8 +132,11 @@
         outline: 2px solid var(--coral);
         outline-offset: 2px;
       }
+      .options.no-hover .option:focus,
       .options.no-hover .option:focus-visible {
         outline: none;
+        border-color: var(--card-line);
+        background: transparent;
       }
       .progress {
         display: flex;
@@ -583,6 +586,9 @@
       }
 
       function renderQuestion() {
+        if (document.activeElement && document.activeElement.blur) {
+          document.activeElement.blur();
+        }
         const q = questions[current];
         document.getElementById("q-label").textContent = q.label;
         document.getElementById("q-text").textContent = q.text;
@@ -608,10 +614,15 @@
         renderProgress();
 
         optsEl.classList.add("no-hover");
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            optsEl.classList.remove("no-hover");
-          });
+        const clearNoHover = () => {
+          optsEl.classList.remove("no-hover");
+          optsEl.removeEventListener("pointerdown", clearNoHover);
+          optsEl.removeEventListener("touchstart", clearNoHover);
+        };
+        optsEl.addEventListener("pointerdown", clearNoHover, { once: true });
+        optsEl.addEventListener("touchstart", clearNoHover, {
+          once: true,
+          passive: true,
         });
       }
 
