@@ -120,6 +120,10 @@
         border-color: var(--coral);
         background: rgba(255, 137, 102, 0.08);
       }
+      .options.no-hover .option:hover {
+        border-color: var(--card-line);
+        background: transparent;
+      }
       .option:focus-visible {
         outline: 2px solid var(--coral);
         outline-offset: 2px;
@@ -594,6 +598,13 @@
           optsEl.appendChild(btn);
         });
         renderProgress();
+
+        optsEl.classList.add("no-hover");
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            optsEl.classList.remove("no-hover");
+          });
+        });
       }
 
       document
