@@ -412,6 +412,13 @@
           transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.35s,
           box-shadow 0.6s ease 0.35s;
       }
+      .env-letter-icon {
+        opacity: 0;
+        transition: opacity 0.4s ease 0.55s;
+      }
+      .envelope-scene.open .env-letter-icon {
+        opacity: 1;
+      }
       .env-fold-left,
       .env-fold-right {
         position: absolute;
@@ -499,7 +506,7 @@
         <div class="screen active" id="screen-envelope">
           <div class="envelope-screen">
             <div class="envelope-scene" id="envelope-scene">
-              <div class="env-letter">💌</div>
+              <div class="env-letter"><span class="env-letter-icon">💌</span></div>
               <div class="env-back"></div>
               <div class="env-fold-left"></div>
               <div class="env-fold-right"></div>
