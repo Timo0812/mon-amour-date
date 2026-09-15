@@ -363,135 +363,147 @@
         align-items: center;
         justify-content: center;
         min-height: 320px;
-        gap: 20px;
+        gap: 8px;
       }
-      .envelope-scene {
+      .letter-image {
         position: relative;
-        width: 220px;
-        height: 155px;
-        perspective: 900px;
-      }
-      .envelope-btn {
-        position: absolute;
-        inset: 0;
+        width: 200px;
+        height: 200px;
         background: none;
         border: none;
         padding: 0;
         cursor: pointer;
         -webkit-tap-highlight-color: transparent;
-        z-index: 10;
       }
-      .env-letter {
+      .animated-mail {
         position: absolute;
-        left: 15px;
-        right: 15px;
-        top: 12px;
-        height: 120px;
-        background: #fbf6ec;
-        border-radius: 8px;
-        box-shadow: none;
-        z-index: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 26px;
-        transform: translateY(0) scale(0.96);
-        transform-origin: bottom center;
-        transition:
-          transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.35s,
-          box-shadow 0.6s ease 0.35s;
-      }
-      .env-letter-icon {
-        opacity: 0;
-        transition: opacity 0.4s ease 0.55s;
-      }
-      .envelope-scene.open .env-letter-icon {
-        opacity: 1;
-      }
-      /* Opaque lower pocket — fully hides the bottom half of the letter */
-      .env-pocket-back {
-        position: absolute;
+        top: 0;
         left: 0;
-        right: 0;
-        bottom: 0;
-        height: 78px;
-        background: var(--card);
-        border: 1px solid var(--card-line);
-        border-radius: 0 0 12px 12px;
-        z-index: 1;
+        height: 150px;
+        width: 200px;
+        transition: transform 0.4s;
       }
-      .env-fold-left,
-      .env-fold-right {
+      .animated-mail .body {
         position: absolute;
         bottom: 0;
         width: 0;
         height: 0;
+        border-style: solid;
+        border-width: 0 0 100px 200px;
+        border-color: transparent transparent var(--coral) transparent;
         z-index: 2;
       }
-      .env-fold-left {
-        left: 0;
-        border-style: solid;
-        border-width: 0 0 78px 110px;
-        border-color: transparent transparent var(--card-line) transparent;
-      }
-      .env-fold-right {
-        right: 0;
-        border-style: solid;
-        border-width: 0 110px 78px 0;
-        border-color: transparent var(--card-line) transparent transparent;
-      }
-      /* Flap group: an OPAQUE rectangle (hides the top half of the letter)
-         with a decorative triangular crease drawn on top. The whole group
-         rotates open together, so nothing ever peeks through its corners. */
-      .env-flap-group {
+      .animated-mail .top-fold {
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 78px;
-        transform-origin: top center;
-        backface-visibility: hidden;
-        z-index: 3;
-      }
-      .env-flap-back {
-        position: absolute;
-        inset: 0;
-        background: var(--card);
-        border: 1px solid var(--card-line);
-        border-radius: 12px 12px 0 0;
-      }
-      .env-flap-crease {
-        position: absolute;
-        top: 0;
-        left: 0;
+        top: 50px;
         width: 0;
         height: 0;
         border-style: solid;
-        border-width: 78px 110px 0 110px;
-        border-color: var(--card-line) transparent transparent transparent;
+        border-width: 50px 100px 0 100px;
+        transform-origin: 50% 0%;
+        transition:
+          transform 0.4s 0.4s,
+          z-index 0.2s 0.4s;
+        border-color: var(--stamp-red) transparent transparent transparent;
+        z-index: 2;
       }
-      .env-seal {
+      .animated-mail .back-fold {
         position: absolute;
-        top: 20px;
+        bottom: 0;
+        width: 200px;
+        height: 100px;
+        background: var(--stamp-red);
+        z-index: 0;
+      }
+      .animated-mail .left-fold {
+        position: absolute;
+        bottom: 0;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 50px 0 50px 100px;
+        border-color: transparent transparent transparent var(--stamp-red);
+        z-index: 2;
+      }
+      .animated-mail .letter {
+        left: 20px;
+        bottom: 0px;
+        position: absolute;
+        width: 160px;
+        height: 60px;
+        background: #fbf6ec;
+        z-index: 1;
+        overflow: hidden;
+        transition: all 0.4s 0.2s;
+      }
+      .letter .letter-border {
+        height: 10px;
+        width: 100%;
+        background: repeating-linear-gradient(
+          -45deg,
+          var(--coral-dark),
+          var(--coral-dark) 8px,
+          transparent 8px,
+          transparent 18px
+        );
+      }
+      .letter .letter-title {
+        margin-top: 10px;
+        margin-left: 5px;
+        height: 10px;
+        width: 40%;
+        background: var(--coral-dark);
+        opacity: 0.7;
+      }
+      .letter .letter-context {
+        margin-top: 10px;
+        margin-left: 5px;
+        height: 10px;
+        width: 20%;
+        background: var(--coral-dark);
+        opacity: 0.7;
+      }
+      .letter .letter-stamp {
+        margin-top: -25px;
+        margin-left: 120px;
+        border-radius: 100%;
+        height: 30px;
+        width: 30px;
+        background: var(--gold);
+        opacity: 0.5;
+      }
+      .letter-image .shadow {
+        position: absolute;
+        top: 178px;
         left: 50%;
+        width: 200px;
+        height: 26px;
+        transition: all 0.4s;
         transform: translateX(-50%);
-        font-size: 20px;
-        pointer-events: none;
+        border-radius: 100%;
+        background: radial-gradient(
+          rgba(0, 0, 0, 0.45),
+          rgba(0, 0, 0, 0),
+          rgba(0, 0, 0, 0)
+        );
+        z-index: -1;
       }
-      @keyframes envFlapOpen {
-        0% {
-          transform: rotateX(0deg);
-        }
-        100% {
-          transform: rotateX(180deg);
-        }
+
+      .letter-image.opened .animated-mail {
+        transform: translateY(50px);
       }
-      .envelope-scene.open .env-flap-group {
-        animation: envFlapOpen 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      .letter-image.opened .animated-mail .top-fold {
+        transition:
+          transform 0.4s,
+          z-index 0.2s;
+        transform: rotateX(180deg);
+        z-index: 0;
       }
-      .envelope-scene.open .env-letter {
-        transform: translateY(-92px) scale(1.02);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+      .letter-image.opened .animated-mail .letter {
+        height: 180px;
+      }
+      .letter-image.opened .shadow {
+        width: 230px;
       }
       .envelope-hint {
         color: var(--muted);
@@ -509,23 +521,26 @@
       <div class="card">
         <div class="screen active" id="screen-envelope">
           <div class="envelope-screen">
-            <div class="envelope-scene" id="envelope-scene">
-              <div class="env-letter"><span class="env-letter-icon">💌</span></div>
-              <div class="env-pocket-back"></div>
-              <div class="env-fold-left"></div>
-              <div class="env-fold-right"></div>
-              <div class="env-flap-group">
-                <div class="env-flap-back"></div>
-                <div class="env-flap-crease"></div>
-                <div class="env-seal">🤍</div>
+            <button
+              class="letter-image"
+              id="envelope-btn"
+              type="button"
+              aria-label="Ouvrir l'enveloppe"
+            >
+              <div class="animated-mail">
+                <div class="back-fold"></div>
+                <div class="letter">
+                  <div class="letter-border"></div>
+                  <div class="letter-title"></div>
+                  <div class="letter-context"></div>
+                  <div class="letter-stamp"></div>
+                </div>
+                <div class="top-fold"></div>
+                <div class="body"></div>
+                <div class="left-fold"></div>
               </div>
-              <button
-                class="envelope-btn"
-                id="envelope-btn"
-                type="button"
-                aria-label="Ouvrir l'enveloppe"
-              ></button>
-            </div>
+              <div class="shadow"></div>
+            </button>
             <p class="envelope-hint">Touche l'enveloppe</p>
           </div>
         </div>
@@ -728,13 +743,13 @@
       document
         .getElementById("envelope-btn")
         .addEventListener("click", (e) => {
-          const scene = document.getElementById("envelope-scene");
-          if (scene.classList.contains("open")) return;
-          scene.classList.add("open");
-          e.currentTarget.disabled = true;
+          const btn = e.currentTarget;
+          if (btn.classList.contains("opened")) return;
+          btn.classList.add("opened");
+          btn.disabled = true;
           setTimeout(() => {
             showScreen(screenAnswer);
-          }, 1150);
+          }, 1000);
         });
 
       if (new URLSearchParams(location.search).get("sent") === "1") {
