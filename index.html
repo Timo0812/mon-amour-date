@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Formulaire officiel — Autorisation de sortie amoureuse</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29.6'%3E%3Cpath fill='%23ff3d1f' d='M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z'/%3E%3C/svg%3E"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -155,6 +160,7 @@
       }
       .screen {
         display: none;
+        text-align: center;
       }
       .screen.active {
         display: block;
@@ -392,7 +398,7 @@
         border-width: 0 0 100px 200px;
         border-color: transparent transparent var(--coral) transparent;
         z-index: 2;
-        border-radius:10px;
+        border-radius: 10px;
       }
       .animated-mail .top-fold {
         position: absolute;
@@ -513,6 +519,9 @@
         color: var(--muted);
         font-size: 24px;
       }
+      .hidden {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -572,7 +581,7 @@
             Madame Minoush (aussi connue sous "Mamou" ou "la meuf qui pèse un
             max"),<br /><br />
             Ce dossier vise à établir aussi rapidement que possible mais aussi
-            lentement que la situation l'exige, les bases d'une soirée de
+            lentement que la situation l'exige, les bases d'un date de
             qualité.<br /><br />
             Cinq articles sont à traiter.<br /><br />
             Aucun justificatif n'est requis, seule ta sincérité est prise en
@@ -645,12 +654,17 @@
 
         <div class="screen" id="screen-thanks">
           <div class="invite-title">Dossier classé avec le sourire</div>
-          <p class="lead" style="text-align: center">
+          <div class="lead" style="text-align: center">
             Demande enregistrée avec la mention "évidemment".<br />
             <br />
-            Vivement <span id="thanks-date">Date</span><br /><br />
+            Je reviendrais vers toi très vite avec des détails
+            <div class="hidden">
+              <span id="thanks-date">Date</span>
+            </div>
+            <br /><br />
+
             Tu es la meilleure 😘
-          </p>
+          </div>
           <div class="actions" style="margin-top: 24px">
             <button class="btn-primary" id="send-btn" type="button">
               Envoyer
@@ -684,36 +698,28 @@
       const questions = [
         {
           label: "Article 1",
-          text: "Quand ?",
-          options: ["Ce soir", "Vendredi", "Samedi"],
+          text: "la durée souhaitée pour le date",
+          options: ["Un soir", "24h", "un week-end"],
         },
         {
           label: "Article 2",
           text: "Situation Géographique Souhaitée",
-          options: [
-            "Maison",
-            "Pas à la maison, mais pas loin (genre 30 min t'as vu)",
-            "Fais moi rêver",
-          ],
+          options: ["à la Maison", "On découvre un endroit", "Fais moi rêver"],
         },
         {
           label: "Article 3",
-          text: "Ambiance souhaitée",
-          options: ["Chill", "Classe", "... 😏"],
+          text: "Genre d'activités souhaitées",
+          options: ["Relax", "Sportive", "Culturelle"],
         },
         {
           label: "Article 4",
           text: "Régime alimentaire de la mission",
-          options: ["Fait maison", "Restaurant", "On se fait livrer"],
+          options: ["On cuisine", "On cuisine pas", "Balek"],
         },
         {
           label: "Article 5",
-          text: "Degré d'aventure souhaité",
-          options: [
-            "Terrain connu",
-            "Terre inconnue",
-            "Peu importe, tant qu'on est ensemble",
-          ],
+          text: "Tu veux savoir ?",
+          options: ["juste la date", "date + endroit", " absolument tout"],
         },
       ];
 
@@ -837,17 +843,17 @@
         document.getElementById("thanks-date").textContent = chosenDate;
         const verdict = document.getElementById("verdict-text");
         verdict.innerHTML =
-          "Analyse du dossier : la requérante souhaite un date le <b>" +
+          "Analyse du dossier : la requérante souhaite un date pour <b>" +
           answers[0].toLowerCase() +
           "</b>, " +
-          "situé à <b>" +
+          "La destination sera <b>" +
           answers[1].toLowerCase() +
           "</b>, dans une ambiance <b>" +
           answers[2].toLowerCase() +
           "</b>. " +
-          "Pour manger ce sera : <b>" +
+          "Pour manger : <b>" +
           answers[3].toLowerCase() +
-          "</b>. Zone d'intervention : <b>" +
+          "</b>. Et tu veux savoir: <b>" +
           answers[4].toLowerCase() +
           "</b>.<br><br>" +
           "Conclusion de la commission : requête jugée légitime, raisonnable et objectivement adorable.";
