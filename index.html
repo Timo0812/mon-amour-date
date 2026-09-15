@@ -392,6 +392,7 @@
         border-width: 0 0 100px 200px;
         border-color: transparent transparent var(--coral) transparent;
         z-index: 2;
+        border-radius:10px;
       }
       .animated-mail .top-fold {
         position: absolute;
@@ -404,16 +405,18 @@
         transition:
           transform 0.4s 0.4s,
           z-index 0.2s 0.4s;
-        border-color: var(--stamp-red) transparent transparent transparent;
+        border-color: var(--coral-dark) transparent transparent transparent;
         z-index: 2;
+        border-radius: 10px;
       }
       .animated-mail .back-fold {
         position: absolute;
         bottom: 0;
         width: 200px;
         height: 100px;
-        background: var(--stamp-red);
+        background: var(--coral-dark);
         z-index: 0;
+        border-radius: 10px;
       }
       .animated-mail .left-fold {
         position: absolute;
@@ -422,8 +425,9 @@
         height: 0;
         border-style: solid;
         border-width: 50px 0 50px 100px;
-        border-color: transparent transparent transparent var(--stamp-red);
+        border-color: transparent transparent transparent var(--coral);
         z-index: 2;
+        border-radius: 10px;
       }
       .animated-mail .letter {
         left: 20px;
@@ -507,7 +511,7 @@
       }
       .envelope-hint {
         color: var(--muted);
-        font-size: 14px;
+        font-size: 24px;
       }
     </style>
   </head>
@@ -541,7 +545,7 @@
               </div>
               <div class="shadow"></div>
             </button>
-            <p class="envelope-hint">Touche l'enveloppe</p>
+            <p class="envelope-hint">Ouvre ta lettre ☺️</p>
           </div>
         </div>
 
@@ -740,17 +744,15 @@
         el.classList.add("active");
       }
 
-      document
-        .getElementById("envelope-btn")
-        .addEventListener("click", (e) => {
-          const btn = e.currentTarget;
-          if (btn.classList.contains("opened")) return;
-          btn.classList.add("opened");
-          btn.disabled = true;
-          setTimeout(() => {
-            showScreen(screenAnswer);
-          }, 1000);
-        });
+      document.getElementById("envelope-btn").addEventListener("click", (e) => {
+        const btn = e.currentTarget;
+        if (btn.classList.contains("opened")) return;
+        btn.classList.add("opened");
+        btn.disabled = true;
+        setTimeout(() => {
+          showScreen(screenAnswer);
+        }, 1000);
+      });
 
       if (new URLSearchParams(location.search).get("sent") === "1") {
         showScreen(screenSent);
